@@ -1,0 +1,52 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  BASE_URL: http://localhost:9911
+  CONTENT_TYPE: "Content-Type: application/json"
+
+tasks:
+  dev:
+    desc: Start dev server
+    run: once
+    deps:
+      - task: dev:frontend
+      - task: dev:backend
+
+  dev:frontend:
+    desc: Start frontend server
+    run: once
+    dir: ./frontend
+    deps:
+      - frontend:install-deps
+    cmd: bun run dev
+
+  frontend:install-deps:
+    desc: Install dependencies
+    run: once
+    dir: ./frontend
+    cmd: bun i
+
+  dev:backend:
+    desc: Start backend server
+    run: once
+    deps:
+      - backend:install-deps
+    cmd: air
+  
+  backend:install-deps:
+    desc: Prepare module
+    run: once
+    cmd: go mod tidy
+
+  build:
+    desc: build code
+    run: once
+    cmd: echo "No Implemented"
+
+  health:
+    desc: server health check
+    cmds:
+      - curl -v {{.BASE_URL}}/api/health | jq
+    
