@@ -1,4 +1,10 @@
 # Project Overview
+PocketBaseをGoのフレームワークとして利用したアプリのサンプル。
+- GoogleのIdPによるOAuth
+  - ユーザー情報は不要で、Googleでログインしたいだけ
+- ログインしたユーザーは、DBの`serial_numbers`のデータを検索できる。
+
+
 
 ## Folder Structure
 
@@ -14,3 +20,9 @@
 フロントエンドでは`daisyUI`を使用する。
 
 https://daisyui.com/llms.txt を参照すること
+
+
+## DB Schema
+PocketBaseデフォルトのAuthコレクションである`users`コレクションと、Baseコレクションである`serial_numbers`がある。
+
+

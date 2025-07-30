@@ -3,6 +3,7 @@ import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { AuthProvider, useAuth } from "./components/AuthProvider";
 import { LoginForm } from "./components/LoginForm";
 import { MainApp } from "./components/MainApp";
+import { Footer } from "./components/parts/Footer";
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 	return (
@@ -20,8 +21,9 @@ function AppContent() {
 	const { isAuthenticated } = useAuth();
 
 	return (
-		<div className="min-h-screen bg-gray-50">
+		<div className="flex flex-col min-h-screen bg-gray-100">
 			{isAuthenticated ? <MainApp /> : <LoginForm />}
+			<Footer />
 		</div>
 	);
 }

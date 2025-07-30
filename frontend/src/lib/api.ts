@@ -3,6 +3,8 @@ import { pb } from "./pocketbase";
 // pbをエクスポート
 export { pb };
 
+// serial_numbersコレクション取得API
+
 // 認証関連のAPI関数
 export const authApi = {
 	// Google OAuth認証

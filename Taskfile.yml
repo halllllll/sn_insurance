@@ -7,10 +7,6 @@ vars:
   CONTENT_TYPE: "Content-Type: application/json"
 
 tasks:
-  ln_pb_data:
-    desc: Make symbolic link pb_data for air tmp folder
-    run: once
-    cmd: ln -s pb_data ./tmp/pb_data
   dev:
     desc: Start dev server
     run: once
