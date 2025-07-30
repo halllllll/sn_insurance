@@ -1,70 +1,33 @@
-import { useActionState } from "react";
+import useSWR from "swr";
 import { pb } from "../lib/api";
+import type { SerialNumber } from "../types/serial_number";
 
-interface SerialNumber {
-	id: string;
-	serial_number: string;
-	is_assuarance: boolean;
-	created: string;
-	updated: string;
-}
+// import type { SerialNumberSuccess } from "./type";
 
-interface SerialNumbersState {
-	data: SerialNumber[] | null;
-	error: string | null;
-	isInitialLoad: boolean;
-}
-
-async function fetchSerialNumbersAction(
-	prevState: SerialNumbersState | null,
-	_formData: FormData,
-): Promise<SerialNumbersState> {
+async function fetchSerialNumbers() {
+	// dummy sleep time
+	// await new Promise((_) => setTimeout(_, 2000));
 	try {
-		// 初回ロードのダミー待機時間
-		if (prevState?.isInitialLoad) {
-			await new Promise((resolve) => setTimeout(resolve, 1500));
-		}
-
-		const sns = await pb
+		const result = await pb
 			.collection("serial_numbers")
 			.getFullList<SerialNumber>();
-		return {
-			data: sns,
-			error: null,
-			isInitialLoad: false,
-		};
+		return result;
 	} catch (error) {
 		console.error("データ取得エラー:", error);
-		return {
-			data: null,
-			error: "データの取得に失敗しました",
-			isInitialLoad: false,
-		};
+		throw error;
 	}
 }
 
 export function useSerialNumbers() {
-	const [state, formAction, isPending] = useActionState(
-		fetchSerialNumbersAction,
-		{
-			data: null,
-			error: null,
-			isInitialLoad: true,
-		},
+	const { data, isLoading, error, mutate } = useSWR(
+		["seriarl_number"],
+		fetchSerialNumbers,
 	);
 
-	// 初回自動実行をsetTimeoutで非同期化
-	if (state.isInitialLoad && !isPending) {
-		setTimeout(() => {
-			const form = new FormData();
-			formAction(form);
-		}, 0);
-	}
-
 	return {
-		data: state?.data || null,
-		error: state?.error || null,
-		isLoading: isPending,
-		fetchAction: formAction,
+		data,
+		isLoading,
+		error,
+		mutate,
 	};
 }

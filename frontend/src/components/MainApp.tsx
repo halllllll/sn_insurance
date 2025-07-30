@@ -1,27 +1,24 @@
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { useSerialNumbers } from "../hooks/useSerialNumbers";
 import { useAuth } from "./AuthProvider";
 
-function SNList() {
-	const {
-		data: serialNumbers,
-		error,
-		isLoading,
-		fetchAction,
-	} = useSerialNumbers();
-
-	if (isLoading) {
-		return (
-			<div className="p-4">
-				<h2 className="text-lg font-bold mb-4">シリアル番号一覧</h2>
-				<div className="flex items-center gap-2">
-					<span className="loading loading-spinner loading-sm"></span>
-					<span>読み込み中...</span>
-				</div>
+function Loading() {
+	return (
+		<div className="p-4">
+			<h2 className="text-lg font-bold mb-4">シリアル番号一覧</h2>
+			<div className="flex items-center gap-2">
+				<span className="loading loading-spinner loading-sm"></span>
+				<span>読み込み中...</span>
 			</div>
-		);
-	}
+		</div>
+	);
+}
 
+function SNList() {
+	const { data: serialNumbers, error, isLoading, mutate } = useSerialNumbers();
+	if (isLoading) {
+		return <Loading />;
+	}
 	if (error) {
 		return (
 			<div className="p-4">
@@ -29,15 +26,13 @@ function SNList() {
 				<div className="alert alert-error mb-4">
 					<span>{error}</span>
 				</div>
-				<form>
-					<button
-						type="submit"
-						formAction={fetchAction}
-						className="btn btn-primary"
-					>
-						再試行
-					</button>
-				</form>
+				<button
+					type="button"
+					onClick={() => mutate()}
+					className="btn btn-primary"
+				>
+					再試行
+				</button>
 			</div>
 		);
 	}
@@ -48,11 +43,9 @@ function SNList() {
 				<h2 className="text-lg font-bold">
 					シリアル番号一覧 ({serialNumbers?.length || 0}件)
 				</h2>
-				<form>
-					<button type="submit" formAction={fetchAction} className="btn btn-sm">
-						更新
-					</button>
-				</form>
+				<button type="button" onClick={() => mutate()} className="btn btn-sm">
+					更新
+				</button>
 			</div>
 
 			{!serialNumbers || serialNumbers.length === 0 ? (
@@ -117,7 +110,9 @@ export const MainApp: FC = () => {
 
 			{/* メインコンテンツ */}
 			<main className="flex-1 max-w-4xl mx-auto w-full">
-				<SNList />
+				<Suspense fallback={<Loading />}>
+					<SNList />
+				</Suspense>
 			</main>
 
 			{/* フッター */}
