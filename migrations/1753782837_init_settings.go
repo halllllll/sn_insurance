@@ -22,7 +22,7 @@ func init() {
 		//   - is_assuarance (bool, default: false)
 		// - serial_numbers collectionにインデックスを追加
 
-		appInfo := config.LoadAppInfo()
+		cfg := config.LoadConfig()
 
 		userCollection, err := app.FindCollectionByNameOrId("users")
 		if err != nil {
@@ -40,8 +40,8 @@ func init() {
 		userCollection.OAuth2.Providers = []core.OAuth2ProviderConfig{
 			{
 				Name:         "google",
-				ClientId:     appInfo.ClientID,
-				ClientSecret: appInfo.ClientSecret,
+				ClientId:     cfg.AppInfo.ClientID,
+				ClientSecret: cfg.AppInfo.ClientSecret,
 			},
 		}
 

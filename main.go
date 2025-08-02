@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"learning-pb-easy/config"
+	"learning-pb-easy/frontend"
 	"log"
 	"net/http"
 	"os"
@@ -13,13 +14,14 @@ import (
 	_ "learning-pb-easy/migrations" // import migrations to register them
 
 	"github.com/pocketbase/pocketbase"
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/spf13/cobra"
 )
 
 func main() {
-	appInfo := config.LoadAppInfo()
+	cfg := config.LoadConfig()
 
 	isGoRun := strings.HasPrefix(os.Args[0], os.TempDir())
 
@@ -36,7 +38,7 @@ func main() {
 		app.Logger().Info("🐰 アプリケーションのブートストラップ中...")
 		settings := app.Settings()
 		if settings.Meta.AppName == "Acme" {
-			settings.Meta.AppName = appInfo.Name
+			settings.Meta.AppName = cfg.AppInfo.Name
 		}
 		settings.Logs.MaxDays = 7
 		settings.Logs.LogAuthId = true
@@ -121,6 +123,17 @@ func main() {
 			})
 		})
 		return e.Next()
+	})
+
+	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
+		se.Router.BindFunc(func(e *core.RequestEvent) error {
+			// なにがしかのミドルウェア
+			return e.Next()
+		})
+
+		// 埋め込まれたフロントエンドの静的ファイルを提供
+		se.Router.GET("/{path...}", apis.Static(frontend.DistDirFS, true)).Bind(apis.Gzip())
+		return se.Next()
 	})
 
 	if err := app.Start(); err != nil {

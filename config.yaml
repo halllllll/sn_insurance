@@ -1,0 +1,9 @@
+
+backend:
+  port: 9991
+  host: "localhost"
+frontend:
+  port: 10101
+  host: "localhost"
+pocketbase:
+  url: "http://localhost:9991"
