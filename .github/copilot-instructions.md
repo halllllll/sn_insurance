@@ -4,8 +4,6 @@ PocketBaseをGoのフレームワークとして利用したアプリのサン�
   - ユーザー情報は不要で、Googleでログインしたいだけ
 - ログインしたユーザーは、DBの`serial_numbers`のデータを検索できる。
 
-
-
 ## Folder Structure
 
 - `frontend/*`にはフロントエンドコードがある
@@ -18,9 +16,6 @@ PocketBaseをGoのフレームワークとして利用したアプリのサン�
 
 ## UI guidelines
 フロントエンドでは`daisyUI`を使用する。
-
-https://daisyui.com/llms.txt を参照すること
-
 
 ## DB Schema
 PocketBaseデフォルトのAuthコレクションである`users`コレクションと、Baseコレクションである`serial_numbers`がある。

@@ -31,7 +31,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const [user, setUser] = React.useState<User | null>(
 		authApi.getCurrentUser() as User | null,
 	);
-	// const { showError, showWarning } = useToast();
 
 	// 認証状態の監視とトークンの有効性チェック
 	useEffect(() => {
