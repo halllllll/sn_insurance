@@ -4,8 +4,9 @@ import PocketBase from "pocketbase";
 // TODO: モノレポでenvを統一（あるいは統一するよりマシな方法で）、アプリのURLを取得
 
 const getBaseUrl = () => {
-	// 開発環境用のフォールバック
-	return "http://localhost:9991";
+	return import.meta.env.DEV
+		? "http://localhost:9991"
+		: import.meta.env.VITE_AP_URL;
 };
 
 export const pb = new PocketBase(getBaseUrl());
@@ -16,7 +17,6 @@ export interface User {
 	email: string;
 	name: string;
 	avatar?: string;
-	// role: "admin" | "member";
 	created: string;
 	updated: string;
 }

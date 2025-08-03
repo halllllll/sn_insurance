@@ -3,71 +3,46 @@ import { pb } from "./pocketbase";
 // pbをエクスポート
 export { pb };
 
-// serial_numbersコレクション取得API
-
 // 認証関連のAPI関数
 export const authApi = {
 	// Google OAuth認証
 	// async/awaitを使うとsafariでバグるらしい?
-	// （結局今の設定だとトランスパイルしたらasync/awaitになりそうだけど）
+	// https://github.com/pocketbase/js-sdk/issues/331#issuecomment-2621463867
 	async loginWithGoogle() {
+		const eagerWindowOpen = window.open("", "_blank");
+
 		try {
-			console.log("🐰 OAuth認証を開始します...?");
+			console.log("🐰 OAuth認証を開始します...");
 			console.info("PocketBase URL:", pb.baseURL);
 
-			// // なんかうまくいかない
-			// return pb
-			// 	.collection("users")
-			// 	.authWithOAuth2({
-			// 		provider: "google",
-			// 		urlCallback: (url) => {
-			// 			console.info("🐰 OAuth URL??:", url);
-			// 			const adjustUrl = new URL(url);
-			// 			adjustUrl.searchParams.set(
-			// 				"redirect_uri",
-			// 				`${pb.baseURL}/api/oauth2-redirect`,
-			// 			);
-			// 			console.log("🐸: ", adjustUrl);
-			// 			// window.location.href = url;
-			// 			window.open(adjustUrl, "_blank");
-			// 		},
-			// 	})
-			// 	.then((resolve) => {
-			// 		console.info("俺は何");
-			// 		console.log(resolve);
-			// 		return resolve;
-			// 	})
-			// 	.catch((reason) => {
-			// 		console.error("だめだ〜");
-			// 		console.error(reason);
-			// 		throw reason;
-			// 	});
+			return await pb.collection("users").authWithOAuth2({
+				provider: "google",
+				urlCallback: (url) => {
+					console.info("🐰 OAuth URL:", url);
+					// window.open(url, "_blank"); // popupがブロックされてしまう
 
-			try {
-				console.log("🐰 OAuth認証を開始します...");
-				console.info("PocketBase URL:", pb.baseURL);
+					const adjustedUrl = new URL(url);
 
-				// まずauth methodsを確認
-				const authMethods = await pb.collection("users").listAuthMethods();
-				console.log("利用可能な認証方法:", authMethods);
-				console.log("OAuth2プロバイダー:", authMethods.oauth2?.providers);
+					// クエリを追加
+					adjustedUrl.searchParams.set("access_type", "offline");
+					adjustedUrl.searchParams.set("prompt", "consent");
 
-				return pb.collection("users").authWithOAuth2({
-					provider: "google",
-					// urlCallback: (url) => {
-					// 	console.info("🐰 OAuth URL:", url);
-					// 	window.open(url, "_blank");
-					// },
-				});
-			} catch (error) {
-				console.error("👺 OAuth認証エラー:", error);
-				if (error) {
-					console.error(error);
-				}
-				throw error;
-			}
+					console.log(`url: ${adjustedUrl.toString()}`);
+
+					// 新しいタブで同意画面
+					if (eagerWindowOpen) {
+						eagerWindowOpen.location.href = adjustedUrl.toString();
+					} else {
+						throw Error("no window context");
+					}
+				},
+			});
 		} catch (error) {
 			console.error("👺 OAuth認証エラー:", error);
+			if (error) {
+				console.error(error);
+			}
+			eagerWindowOpen?.close();
 			throw error;
 		}
 	},
