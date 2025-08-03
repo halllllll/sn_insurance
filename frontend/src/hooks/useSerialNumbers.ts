@@ -2,11 +2,7 @@ import useSWR from "swr";
 import { pb } from "../lib/api";
 import type { SerialNumber } from "../types/serial_number";
 
-// import type { SerialNumberSuccess } from "./type";
-
 async function fetchSerialNumbers() {
-	// dummy sleep time
-	// await new Promise((_) => setTimeout(_, 2000));
 	try {
 		const result = await pb
 			.collection("serial_numbers")

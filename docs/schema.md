@@ -18,7 +18,7 @@ erDiagram
   serial_number{
     text id
     text serial_number
-    bool is_assuarance
+    bool is_insurance
     datetime created
     datetime updated
   }

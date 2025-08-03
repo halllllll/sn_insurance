@@ -3,7 +3,7 @@ export interface SerialNumber {
 	collectionName: string;
 	id: string;
 	serial_number: string;
-	is_assuarance: boolean;
+	is_insurance: boolean;
 	created: string;
 	updated: string;
 }

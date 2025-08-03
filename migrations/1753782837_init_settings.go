@@ -19,7 +19,7 @@ func init() {
 		// - serial_numbers collectionをbase collectionで追加
 		// - serial_numbers collectionにフィールドを追加
 		//   - serial_number (string, required)
-		//   - is_assuarance (bool, default: false)
+		//   - is_insurance (bool, default: false)
 		// - serial_numbers collectionにインデックスを追加
 
 		cfg := config.LoadConfig()
@@ -73,7 +73,7 @@ func init() {
 			Required: true,
 		})
 		snCollection.Fields.Add(&core.BoolField{
-			Name:     "is_assuarance",
+			Name:     "is_insurance",
 			Required: true,
 		})
 

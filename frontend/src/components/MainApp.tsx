@@ -65,9 +65,9 @@ function SNList() {
 								<td>{sn.serial_number}</td>
 								<td>
 									<span
-										className={`badge ${sn.is_assuarance ? "badge-success" : "badge-warning"}`}
+										className={`badge ${sn.is_insurance ? "badge-success" : "badge-warning"}`}
 									>
-										{sn.is_assuarance ? "保証済み" : "未保証"}
+										{sn.is_insurance ? "保証済み" : "未保証"}
 									</span>
 								</td>
 								<td>{new Date(sn.created).toLocaleDateString("ja-JP")}</td>

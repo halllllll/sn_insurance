@@ -99,7 +99,7 @@ func main() {
 					record := core.NewRecord(snCollection)
 					record.Load(map[string]interface{}{
 						"serial_number": csvRecord[0],
-						"is_assuarance": csvRecord[1] == "true", // "true
+						"is_insurance":  csvRecord[1] == "true", // "true
 					})
 
 					if err := txApp.Save(record); err != nil {
