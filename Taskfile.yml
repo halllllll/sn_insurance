@@ -4,7 +4,9 @@ version: '3'
 
 vars:
   BASE_URL: http://localhost:9991
+  APP_URL: 
   CONTENT_TYPE: "Content-Type: application/json"
+  APP_NAME: tekitou
 
 tasks:
   dev:
@@ -43,10 +45,30 @@ tasks:
   build:
     desc: build code
     run: once
-    cmd: echo "No Implemented"
+    deps:
+      - task: frontend:build
+    cmds:
+      - task: backend:build
+
+  frontend:build:
+    desc: build frontend code
+    dir: ./frontend
+    cmd: bun run build
+  
+  backend:build:
+    desc: build pocketbase code
+    cmd: go build -ldflags='-s -w' -trimpath -o {{.APP_NAME}}
+
+  up:
+    desc: execute pocketbase app
+    cmd: ./{{.APP_NAME}} serve --http=localhost:9991
+
+  dev:health:
+    desc: server health check
+    cmds:
+      - curl -v {{.BASE_URL}}/api/health | jq
 
   health:
     desc: server health check
     cmds:
-      - curl -v {{.BASE_URL}}/api/health | jq
-    
+      - curl -v {{.APP_URL}}/api/health | jq
