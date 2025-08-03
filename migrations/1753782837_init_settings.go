@@ -73,7 +73,8 @@ func init() {
 			Required: true,
 		})
 		snCollection.Fields.Add(&core.BoolField{
-			Name: "is_assuarance",
+			Name:     "is_assuarance",
+			Required: true,
 		})
 
 		snCollection.Fields.Add(&core.AutodateField{
