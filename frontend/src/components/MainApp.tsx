@@ -88,7 +88,7 @@ export const MainApp: FC = () => {
 	}
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<div className="flex flex-col flex-grow">
 			{/* ヘッダー */}
 			<header className="bg-white shadow-sm p-4">
 				<div className="flex justify-between items-center max-w-4xl mx-auto">
@@ -114,11 +114,6 @@ export const MainApp: FC = () => {
 					<SNList />
 				</Suspense>
 			</main>
-
-			{/* フッター */}
-			<footer className="p-4 text-center text-sm text-gray-500 border-t">
-				© 2025 シリアル番号管理システム
-			</footer>
 		</div>
 	);
 };

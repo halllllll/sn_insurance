@@ -6,7 +6,7 @@ export const LoginForm: FC = () => {
 	const [_, formAction, isPending] = useActionState(loginWithGoogle, null);
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<div className="flex flex-col flex-grow  bg-gray-100">
 			{/* メインコンテンツ */}
 			<div className="flex-1 flex items-center justify-center p-4">
 				<div className="w-full max-w-sm">
@@ -34,11 +34,6 @@ export const LoginForm: FC = () => {
 					)}
 				</div>
 			</div>
-
-			{/* フッター */}
-			<footer className="p-4 text-center text-sm text-gray-500 border-t">
-				© 2025 シリアル番号管理システム
-			</footer>
 		</div>
 	);
 };

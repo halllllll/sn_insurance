@@ -21,7 +21,7 @@ function AppContent() {
 	const { isAuthenticated } = useAuth();
 
 	return (
-		<div className="flex flex-col min-h-screen bg-gray-100">
+		<div className="mx-auto min-h-screen flex flex-col">
 			{isAuthenticated ? <MainApp /> : <LoginForm />}
 			<Footer />
 		</div>
