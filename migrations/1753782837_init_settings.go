@@ -88,7 +88,7 @@ func init() {
 		})
 
 		// rule 認証済ユーザーのみアクセス可能
-		snCollection.ListRule = types.Pointer(`@request.auth.id != ""`)
+		snCollection.ListRule = types.Pointer(`@request.auth.verified = true && @request.auth.id != ""`)
 		// あとはそもそも不要
 
 		return app.Save(snCollection)
