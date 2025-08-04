@@ -1,6 +1,5 @@
 import { FileText, Search, Shield } from "lucide-react";
 import type { FC } from "react";
-import { AppHeader } from "./AppHeader";
 import { useAuth } from "./AuthProvider";
 
 export const LoginForm: FC = () => {
@@ -8,7 +7,17 @@ export const LoginForm: FC = () => {
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-primary/20 to-secondary/20">
-			<AppHeader showUserInfo={false} />
+			{/* ヘッダー */}
+			<header className="bg-base-100/80 backdrop-blur-sm shadow-sm">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+					<div className="flex items-center">
+						<Shield className="h-8 w-8 text-primary mr-3" />
+						<h1 className="text-xl font-semibold text-base-content">
+							端末保険状況確認システム
+						</h1>
+					</div>
+				</div>
+			</header>
 
 			{/* メインコンテンツ */}
 			<main className="flex-1 flex items-center justify-center p-4 pt-16">
@@ -66,7 +75,7 @@ export const LoginForm: FC = () => {
 								className="btn btn-primary w-full gap-2"
 								type="button"
 							>
-								<svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+								<svg className="w-5 h-5" viewBox="0 0 24 24">
 									<title>Google</title>
 									<path
 										fill="currentColor"
