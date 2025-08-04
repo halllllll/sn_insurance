@@ -1,10 +1,12 @@
 import { Search } from "lucide-react";
 import type { FC } from "react";
+import { useOrganizationSettings } from "../hooks/useOrganizationSettings";
 import { AppHeader } from "./AppHeader";
 import { useAuth } from "./AuthProvider";
 
 export const LoginForm: FC = () => {
 	const { loginWithGoogle } = useAuth();
+	const { settings } = useOrganizationSettings();
 
 	return (
 		<div className="bg-gradient-to-br from-primary/20 to-secondary/20">
@@ -20,7 +22,7 @@ export const LoginForm: FC = () => {
 									<Search className="h-8 w-8 text-primary" />
 								</div>
 								<h2 className="text-2xl font-bold text-base-content mb-2">
-									端末保険確認検索
+									{settings.app_title}
 								</h2>
 								<p className="text-base-content/70">
 									シリアルナンバーから保険状況を確認
@@ -85,7 +87,7 @@ export const LoginForm: FC = () => {
 
 							<div className="text-center mt-4">
 								<p className="text-xs text-base-content/50">
-									ログインすることで、サービスの利用規約に同意したものとみなします
+									Google認証を使用してセキュアにログインします
 								</p>
 							</div>
 						</div>

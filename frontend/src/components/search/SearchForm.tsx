@@ -1,5 +1,6 @@
 import { Download, FileUp, HelpCircle, Search } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useOrganizationSettings } from "../../hooks/useOrganizationSettings";
 import {
 	type SearchResult,
 	useRealtimeSearch,
@@ -9,20 +10,50 @@ import { HelpModal } from "./HelpModal";
 import { SearchResults } from "./SearchResults";
 
 export function SearchForm() {
-	const [searchMode, setSearchMode] = useState<"quick" | "bulk">("quick");
+	const [searchMode, setSearchMode] = useState<"single" | "bulk">("single");
 	const [singleQuery, setSingleQuery] = useState("");
 	const [bulkQuery, setBulkQuery] = useState("");
 	const [searchTerms, setSearchTerms] = useState<string[]>([]);
+	const [accumulatedResults, setAccumulatedResults] = useState<SearchResult[]>(
+		[],
+	);
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const [showHelp, setShowHelp] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
+	const { settings } = useOrganizationSettings();
 	const { suggestions, isLoading: isLoadingSuggestions } = useRealtimeSearch(
-		searchMode === "quick" ? singleQuery : "",
+		searchMode === "single" ? singleQuery : "",
 		showSuggestions,
 	);
 	const { results, isLoading: isSearching } =
 		useSerialNumberSearch(searchTerms);
+
+	// 検索結果が更新されたら累積結果に追加
+	useEffect(() => {
+		if (results.length > 0) {
+			setAccumulatedResults((prev) => {
+				// 重複を避けるため、既存のシリアルナンバーを除外
+				const existingSerials = new Set(prev.map((r) => r.serial_number));
+				const newResults = results.filter(
+					(r) => !existingSerials.has(r.serial_number),
+				);
+				return [...prev, ...newResults];
+			});
+			// 検索完了後に入力欄をクリア
+			setSingleQuery("");
+			setBulkQuery("");
+			setSearchTerms([]);
+		}
+	}, [results]);
+
+	// 検索結果をクリア
+	const handleClearResults = () => {
+		setAccumulatedResults([]);
+		setSingleQuery("");
+		setBulkQuery("");
+		setSearchTerms([]);
+	};
 
 	// クイック検索
 	const handleSingleSearch = () => {
@@ -70,11 +101,11 @@ export function SearchForm() {
 
 	// 結果をCSV出力
 	const handleCsvDownload = () => {
-		if (results.length === 0) return;
+		if (accumulatedResults.length === 0) return;
 
 		const csvContent = [
 			["シリアルナンバー", "保険状況", "検索結果"],
-			...results.map((result: SearchResult) => [
+			...accumulatedResults.map((result: SearchResult) => [
 				result.serial_number,
 				result.found
 					? result.is_insurance
@@ -102,7 +133,7 @@ export function SearchForm() {
 			<div className="text-center space-y-2">
 				<h1 className="text-2xl font-bold text-primary flex items-center justify-center gap-2">
 					<Search className="w-6 h-6" />
-					端末保険状況確認
+					{settings.app_title}
 				</h1>
 				<p className="text-base-content/70">
 					シリアルナンバーを入力して保険状況を確認できます
@@ -125,11 +156,11 @@ export function SearchForm() {
 					</div>
 
 					{/* タブ */}
-					<div className="tabs tabs-border mb-4">
+					<div className="tabs tabs-boxed mb-4">
 						<button
 							type="button"
-							className={`tab ${searchMode === "quick" ? "tab-active" : ""}`}
-							onClick={() => setSearchMode("quick")}
+							className={`tab ${searchMode === "single" ? "tab-active" : ""}`}
+							onClick={() => setSearchMode("single")}
 						>
 							クイック検索
 						</button>
@@ -143,7 +174,7 @@ export function SearchForm() {
 					</div>
 
 					{/* クイック検索フォーム */}
-					{searchMode === "quick" && (
+					{searchMode === "single" && (
 						<div className="space-y-4">
 							<div className="form-control">
 								<label htmlFor="single-search-input" className="label">
@@ -302,54 +333,65 @@ export function SearchForm() {
 			</div>
 
 			{/* 検索結果 */}
-			{results.length > 0 && (
-				<>
-					{/* 結果サマリーとCSV出力 */}
-					<div className="card bg-base-100 shadow-lg">
-						<div className="card-body py-4">
-							<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-								<div className="flex items-center gap-4">
-									<span className="text-lg font-semibold">
-										検索結果: {results.length}件
+			{accumulatedResults.length > 0 && (
+				<div className="card bg-base-100 shadow-lg">
+					<div className="card-body">
+						{/* 結果サマリーとCSV出力 */}
+						<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+							<div className="flex items-center gap-4">
+								<h2 className="card-title">
+									検索結果: {accumulatedResults.length}件
+								</h2>
+								<div className="flex gap-2">
+									<span className="badge badge-success">
+										保険済み:{" "}
+										{
+											accumulatedResults.filter(
+												(r: SearchResult) => r.found && r.is_insurance,
+											).length
+										}
 									</span>
-									<div className="flex gap-2">
-										<span className="badge badge-success">
-											保険有り:{" "}
-											{
-												results.filter(
-													(r: SearchResult) => r.found && r.is_insurance,
-												).length
-											}
-										</span>
-										<span className="badge badge-warning">
-											未保険:{" "}
-											{
-												results.filter(
-													(r: SearchResult) => r.found && !r.is_insurance,
-												).length
-											}
-										</span>
-										<span className="badge badge-error">
-											未発見:{" "}
-											{results.filter((r: SearchResult) => !r.found).length}
-										</span>
-									</div>
+									<span className="badge badge-secondary">
+										未保険:{" "}
+										{
+											accumulatedResults.filter(
+												(r: SearchResult) => r.found && !r.is_insurance,
+											).length
+										}
+									</span>
+									<span className="badge badge-warning">
+										未発見:{" "}
+										{
+											accumulatedResults.filter((r: SearchResult) => !r.found)
+												.length
+										}
+									</span>
 								</div>
+							</div>
 
+							<div className="flex gap-2">
+								<button
+									type="button"
+									onClick={handleClearResults}
+									className="btn btn-outline btn-sm"
+								>
+									結果クリア
+								</button>
 								<button
 									type="button"
 									onClick={handleCsvDownload}
-									className="btn btn-sm btn-outline"
+									className="btn btn-outline btn-sm"
 								>
 									<Download className="w-4 h-4" />
 									CSV出力
 								</button>
 							</div>
 						</div>
-					</div>
 
-					<SearchResults results={results} />
-				</>
+						{/* 検索結果テーブル */}
+						<SearchResults results={accumulatedResults} />
+					</div>
+				</div>
 			)}
 
 			{/* ヘルプモーダル */}

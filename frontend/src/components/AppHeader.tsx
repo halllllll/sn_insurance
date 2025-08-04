@@ -1,5 +1,6 @@
 import { Shield } from "lucide-react";
 import type { FC } from "react";
+import { useOrganizationSettings } from "../hooks/useOrganizationSettings";
 import { useAuth } from "./AuthProvider";
 
 interface AppHeaderProps {
@@ -8,6 +9,7 @@ interface AppHeaderProps {
 
 export const AppHeader: FC<AppHeaderProps> = ({ showUserInfo = false }) => {
 	const { user, logout } = useAuth();
+	const { settings } = useOrganizationSettings();
 
 	return (
 		<header className="bg-base-100/80 backdrop-blur-sm shadow-sm">
@@ -16,7 +18,8 @@ export const AppHeader: FC<AppHeaderProps> = ({ showUserInfo = false }) => {
 					<div className="flex items-center">
 						<Shield className="h-8 w-8 text-primary mr-3" />
 						<h1 className="text-xl font-semibold text-base-content">
-							端末保険状況確認システム
+							{settings.organization_name}
+							{settings.app_title}
 						</h1>
 					</div>
 

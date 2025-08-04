@@ -1,4 +1,4 @@
-import { FileUp, Monitor, Search, Smartphone, X } from "lucide-react";
+import { FileUp, Search, X } from "lucide-react";
 
 interface HelpModalProps {
 	isOpen: boolean;

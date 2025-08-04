@@ -17,7 +17,7 @@ export function SearchResults({ results }: SearchResultsProps) {
 	const getStatusColor = (result: SearchResult) => {
 		if (result.error) return "text-error";
 		if (!result.found) return "text-warning";
-		return result.is_insurance ? "text-success" : "text-warning";
+		return result.is_insurance ? "text-success" : "text-secondary";
 	};
 
 	const getStatusText = (result: SearchResult) => {
@@ -27,47 +27,39 @@ export function SearchResults({ results }: SearchResultsProps) {
 	};
 
 	return (
-		<div className="card bg-base-100 shadow-lg">
-			<div className="card-body">
-				<h2 className="card-title">検索結果 ({results.length}件)</h2>
-
-				<div className="overflow-x-auto">
-					<table className="table table-zebra w-full">
-						<thead>
-							<tr>
-								<th>シリアルナンバー</th>
-								<th>保険状況</th>
-							</tr>
-						</thead>
-						<tbody>
-							{results.map((result) => (
-								<tr key={result.serial_number} className="hover">
-									<td>
-										<div className="font-mono font-medium">
-											{result.serial_number}
+		<div className="overflow-x-auto">
+			<table className="table table-zebra w-full">
+				<thead>
+					<tr>
+						<th>シリアルナンバー</th>
+						<th>保険状況</th>
+					</tr>
+				</thead>
+				<tbody>
+					{results.map((result) => (
+						<tr key={result.serial_number} className="hover">
+							<td>
+								<div className="font-mono font-medium">
+									{result.serial_number}
+								</div>
+							</td>
+							<td>
+								<div
+									className={`flex items-center gap-2 ${getStatusColor(result)}`}
+								>
+									{getStatusIcon(result)}
+									<span className="font-medium">{getStatusText(result)}</span>
+									{result.error && (
+										<div className="text-xs text-error ml-2">
+											({result.error})
 										</div>
-									</td>
-									<td>
-										<div
-											className={`flex items-center gap-2 ${getStatusColor(result)}`}
-										>
-											{getStatusIcon(result)}
-											<span className="font-medium">
-												{getStatusText(result)}
-											</span>
-											{result.error && (
-												<div className="text-xs text-error ml-2">
-													({result.error})
-												</div>
-											)}
-										</div>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
+									)}
+								</div>
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
 		</div>
 	);
 }
