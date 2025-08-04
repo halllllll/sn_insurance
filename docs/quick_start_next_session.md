@@ -7,16 +7,11 @@
 
 ### 1. アプリケーションの起動
 ```bash
-# フロントエンド
-cd frontend
-bun dev
-
-# バックエンド
-task dev:backend
+task dev
 ```
 
 ### 2. 動作確認
-1. ブラウザで http://localhost:3000 にアクセス
+1. ブラウザで http://localhost:10101 にアクセス
 2. Google認証でログイン
 3. 検索画面で何かを検索してみる
 4. ブラウザの開発者ツールでコンソールエラーを確認
