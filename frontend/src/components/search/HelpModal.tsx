@@ -36,7 +36,7 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 							</p>
 							<p>
 								<strong>一括検索:</strong>{" "}
-								複数のシリアルナンバーを改行またはカンマで区切って入力し、「一括検索」ボタンをクリック
+								複数のシリアルナンバーを改行またはカンマで区切って入力し、「一括検索」ボタンをクリック（最大100件まで）
 							</p>
 							<p>
 								<strong>リアルタイム検索:</strong>{" "}
@@ -107,7 +107,7 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 						<h4 className="font-semibold">制限事項</h4>
 						<div className="bg-warning/10 p-4 rounded-lg">
 							<ul className="list-disc list-inside space-y-1 text-sm">
-								<li>一度に検索できるシリアルナンバーは最大50件です</li>
+								<li>一度に検索できるシリアルナンバーは最大100件です</li>
 								<li>リアルタイム検索は2文字以上の入力で動作します</li>
 								<li>CSVファイルの最初の列のみが読み込まれます</li>
 							</ul>

@@ -39,7 +39,7 @@ export function SearchForm() {
 			.split(/[\n,]/)
 			.map((term) => term.trim())
 			.filter((term) => term.length > 0)
-			.slice(0, 50);
+			.slice(0, 100);
 
 		setSearchTerms(terms);
 	};
@@ -56,7 +56,7 @@ export function SearchForm() {
 			const serialNumbers = lines
 				.map((line) => line.split(",")[0]?.trim())
 				.filter((sn) => sn && sn.length > 0)
-				.slice(0, 50);
+				.slice(0, 100);
 
 			if (serialNumbers.length > 0) {
 				setSearchTerms(serialNumbers);
@@ -247,7 +247,7 @@ export function SearchForm() {
 								<textarea
 									id="bulk-search-input"
 									className="textarea textarea-bordered w-full resize-none"
-									placeholder="複数のシリアルナンバーを入力してください&#10;改行またはカンマで区切ってください&#10;例:&#10;ABC123&#10;DEF456&#10;GHI789&#10;&#10;最大50件まで対応"
+									placeholder="複数のシリアルナンバーを入力してください&#10;改行またはカンマで区切ってください&#10;例:&#10;ABC123&#10;DEF456&#10;GHI789&#10;&#10;最大100件まで対応"
 									value={bulkQuery}
 									onChange={(e) => setBulkQuery(e.target.value)}
 								/>

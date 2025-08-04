@@ -1,4 +1,4 @@
-import { FileText, Search, Shield } from "lucide-react";
+import { Search } from "lucide-react";
 import type { FC } from "react";
 import { AppHeader } from "./AppHeader";
 import { useAuth } from "./AuthProvider";
@@ -11,7 +11,7 @@ export const LoginForm: FC = () => {
 			<AppHeader showUserInfo={false} />
 
 			{/* メインコンテンツ */}
-			<main className="flex-1 flex items-center justify-center p-4 pt-16">
+			<main className="min-h-[calc(87vh)] flex-1 flex items-center justify-center p-4">
 				<div className="w-full max-w-md">
 					<div className="card bg-base-100 shadow-xl">
 						<div className="card-body">
@@ -20,44 +20,11 @@ export const LoginForm: FC = () => {
 									<Search className="h-8 w-8 text-primary" />
 								</div>
 								<h2 className="text-2xl font-bold text-base-content mb-2">
-									端末保険確認
+									端末保険確認システム
 								</h2>
 								<p className="text-base-content/70">
-									貸出端末のシリアル番号から
-									<br />
-									保険の有無を素早く確認できます
+									シリアルナンバーから保険状況を確認
 								</p>
-							</div>
-
-							{/* 機能紹介 */}
-							<div className="space-y-3 mb-6">
-								<div className="flex items-center gap-3 p-3 bg-base-200 rounded-lg">
-									<Search className="w-5 h-5 text-primary" />
-									<div>
-										<div className="font-medium text-sm">高速検索</div>
-										<div className="text-xs text-base-content/70">
-											リアルタイム検索対応
-										</div>
-									</div>
-								</div>
-								<div className="flex items-center gap-3 p-3 bg-base-200 rounded-lg">
-									<FileText className="w-5 h-5 text-secondary" />
-									<div>
-										<div className="font-medium text-sm">一括処理</div>
-										<div className="text-xs text-base-content/70">
-											CSV読込・出力対応
-										</div>
-									</div>
-								</div>
-								<div className="flex items-center gap-3 p-3 bg-base-200 rounded-lg">
-									<Shield className="w-5 h-5 text-accent" />
-									<div>
-										<div className="font-medium text-sm">安全性</div>
-										<div className="text-xs text-base-content/70">
-											Google認証による保護
-										</div>
-									</div>
-								</div>
 							</div>
 
 							{/* ログインボタン */}
@@ -92,23 +59,6 @@ export const LoginForm: FC = () => {
 								<p className="text-xs text-base-content/50">
 									ログインすることで、サービスの利用規約に同意したものとみなします
 								</p>
-							</div>
-						</div>
-					</div>
-
-					{/* 使用シーン */}
-					<div className="mt-8 text-center">
-						<p className="text-sm text-base-content/70 mb-4">
-							こんな時に便利です
-						</p>
-						<div className="grid grid-cols-2 gap-3 text-xs">
-							<div className="bg-base-100/50 backdrop-blur-sm p-3 rounded-lg">
-								<div className="font-medium">📱 現場確認</div>
-								<div className="text-base-content/60">貸出時の保険チェック</div>
-							</div>
-							<div className="bg-base-100/50 backdrop-blur-sm p-3 rounded-lg">
-								<div className="font-medium">📊 一括確認</div>
-								<div className="text-base-content/60">複数台の状況確認</div>
 							</div>
 						</div>
 					</div>

@@ -97,9 +97,15 @@ func main() {
 					}
 					fmt.Println(csvRecord)
 					record := core.NewRecord(snCollection)
+
+					// CSVの値をトリミングして正確に比較
+					serialNumber := strings.TrimSpace(csvRecord[0])
+					insuranceValue := strings.TrimSpace(strings.ToLower(csvRecord[1]))
+					isInsurance := insuranceValue == "true" || insuranceValue == "1" || insuranceValue == "yes"
+
 					record.Load(map[string]interface{}{
-						"serial_number": csvRecord[0],
-						"is_insurance":  csvRecord[1] == "true", // "true
+						"serial_number": serialNumber,
+						"is_insurance":  isInsurance,
 					})
 
 					if err := txApp.Save(record); err != nil {

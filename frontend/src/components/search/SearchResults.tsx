@@ -26,12 +26,6 @@ export function SearchResults({ results }: SearchResultsProps) {
 		return result.is_insurance ? "保険加入済み" : "未加入";
 	};
 
-	const getBadgeClass = (result: SearchResult) => {
-		if (result.error) return "badge-error";
-		if (!result.found) return "badge-warning";
-		return result.is_insurance ? "badge-success" : "badge-warning";
-	};
-
 	return (
 		<div className="card bg-base-100 shadow-lg">
 			<div className="card-body">
@@ -43,7 +37,6 @@ export function SearchResults({ results }: SearchResultsProps) {
 							<tr>
 								<th>シリアルナンバー</th>
 								<th>保険状況</th>
-								<th>詳細</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -62,21 +55,12 @@ export function SearchResults({ results }: SearchResultsProps) {
 											<span className="font-medium">
 												{getStatusText(result)}
 											</span>
+											{result.error && (
+												<div className="text-xs text-error ml-2">
+													({result.error})
+												</div>
+											)}
 										</div>
-									</td>
-									<td>
-										<span className={`badge ${getBadgeClass(result)}`}>
-											{result.error
-												? "エラー"
-												: result.found
-													? "検索済み"
-													: "未発見"}
-										</span>
-										{result.error && (
-											<div className="text-xs text-error mt-1">
-												{result.error}
-											</div>
-										)}
 									</td>
 								</tr>
 							))}
