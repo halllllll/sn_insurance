@@ -6,7 +6,7 @@ export const LoginForm: FC = () => {
 	const { loginWithGoogle } = useAuth();
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-primary/20 to-secondary/20">
+		<div className=" bg-gradient-to-br from-primary/20 to-secondary/20">
 			{/* ヘッダー */}
 			<header className="bg-base-100/80 backdrop-blur-sm shadow-sm">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

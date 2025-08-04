@@ -7,7 +7,7 @@ export const LoginForm: FC = () => {
 	const { loginWithGoogle } = useAuth();
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-primary/20 to-secondary/20">
+		<div className="bg-gradient-to-br from-primary/20 to-secondary/20">
 			<AppHeader showUserInfo={false} />
 
 			{/* メインコンテンツ */}

@@ -8,7 +8,7 @@ export const MainApp: FC = () => {
 			<AppHeader showUserInfo={true} />
 
 			{/* メインコンテンツ */}
-			<main className="min-h-[calc(100vh-theme(spacing.16))] py-6">
+			<main className="py-6">
 				<SearchForm />
 			</main>
 		</div>

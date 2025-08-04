@@ -246,7 +246,7 @@ export function SearchForm() {
 
 								<textarea
 									id="bulk-search-input"
-									className="textarea textarea-bordered w-full min-h-[120px] resize-none"
+									className="textarea textarea-bordered w-full resize-none"
 									placeholder="複数のシリアルナンバーを入力してください&#10;改行またはカンマで区切ってください&#10;例:&#10;ABC123&#10;DEF456&#10;GHI789&#10;&#10;最大50件まで対応"
 									value={bulkQuery}
 									onChange={(e) => setBulkQuery(e.target.value)}
