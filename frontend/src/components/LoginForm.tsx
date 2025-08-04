@@ -11,7 +11,7 @@ export const LoginForm: FC = () => {
 			<AppHeader showUserInfo={false} />
 
 			{/* メインコンテンツ */}
-			<main className="min-h-[calc(87vh)] flex-1 flex items-center justify-center p-4">
+			<main className="min-h-[calc(90vh)] flex-1 flex items-center justify-center">
 				<div className="w-full max-w-md">
 					<div className="card bg-base-100 shadow-xl">
 						<div className="card-body">
@@ -20,7 +20,7 @@ export const LoginForm: FC = () => {
 									<Search className="h-8 w-8 text-primary" />
 								</div>
 								<h2 className="text-2xl font-bold text-base-content mb-2">
-									端末保険確認システム
+									端末保険確認検索
 								</h2>
 								<p className="text-base-content/70">
 									シリアルナンバーから保険状況を確認
@@ -30,10 +30,10 @@ export const LoginForm: FC = () => {
 							{/* ログインボタン */}
 							<button
 								onClick={loginWithGoogle}
-								className="btn btn-primary w-full gap-2"
+								className="btn bg-white text-black border-[#e5e5e5] w-full gap-2 h-14"
 								type="button"
 							>
-								<svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+								{/* <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
 									<title>Google</title>
 									<path
 										fill="currentColor"
@@ -51,6 +51,34 @@ export const LoginForm: FC = () => {
 										fill="currentColor"
 										d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
 									/>
+								</svg> */}
+								<svg
+									aria-label="Google logo"
+									width="16"
+									height="16"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 512 512"
+								>
+									<title>Login with Google</title>
+									<g>
+										<path d="m0 0H512V512H0" fill="#fff"></path>
+										<path
+											fill="#34a853"
+											d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
+										></path>
+										<path
+											fill="#4285f4"
+											d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
+										></path>
+										<path
+											fill="#fbbc02"
+											d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
+										></path>
+										<path
+											fill="#ea4335"
+											d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
+										></path>
+									</g>
 								</svg>
 								Googleでログイン
 							</button>

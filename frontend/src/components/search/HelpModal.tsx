@@ -31,16 +31,12 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 						</h4>
 						<div className="bg-base-200 p-4 rounded-lg space-y-2">
 							<p>
-								<strong>単体検索:</strong>{" "}
-								シリアルナンバーを1つ入力して「検索」ボタンをクリック
+								<strong>クイック検索:</strong>{" "}
+								2文字以上入力すると候補が自動表示されます
 							</p>
 							<p>
 								<strong>一括検索:</strong>{" "}
 								複数のシリアルナンバーを改行またはカンマで区切って入力し、「一括検索」ボタンをクリック（最大100件まで）
-							</p>
-							<p>
-								<strong>リアルタイム検索:</strong>{" "}
-								2文字以上入力すると候補が自動表示されます
 							</p>
 						</div>
 					</div>
@@ -51,7 +47,9 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 						<div className="grid md:grid-cols-2 gap-4">
 							<div className="bg-base-200 p-4 rounded-lg">
 								<p className="font-medium mb-2">改行区切り:</p>
-								<pre className="text-sm">ABC123 DEF456 GHI789</pre>
+								<pre className="text-sm whitespace-pre-wrap">
+									${`ABC123\nDEF456\nGHI789`}
+								</pre>
 							</div>
 							<div className="bg-base-200 p-4 rounded-lg">
 								<p className="font-medium mb-2">カンマ区切り:</p>
@@ -111,31 +109,6 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 								<li>リアルタイム検索は2文字以上の入力で動作します</li>
 								<li>CSVファイルの最初の列のみが読み込まれます</li>
 							</ul>
-						</div>
-					</div>
-
-					{/* 使用デバイス */}
-					<div className="space-y-3">
-						<h4 className="font-semibold">推奨環境</h4>
-						<div className="grid md:grid-cols-2 gap-4">
-							<div className="flex items-center gap-3 bg-base-200 p-4 rounded-lg">
-								<Smartphone className="w-8 h-8 text-primary" />
-								<div>
-									<p className="font-medium">モバイル (推奨)</p>
-									<p className="text-sm text-base-content/70">
-										現場での素早い確認に最適
-									</p>
-								</div>
-							</div>
-							<div className="flex items-center gap-3 bg-base-200 p-4 rounded-lg">
-								<Monitor className="w-8 h-8 text-secondary" />
-								<div>
-									<p className="font-medium">PC</p>
-									<p className="text-sm text-base-content/70">
-										一括処理やCSV操作に便利
-									</p>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

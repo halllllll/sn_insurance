@@ -9,7 +9,7 @@ import { HelpModal } from "./HelpModal";
 import { SearchResults } from "./SearchResults";
 
 export function SearchForm() {
-	const [searchMode, setSearchMode] = useState<"single" | "bulk">("single");
+	const [searchMode, setSearchMode] = useState<"quick" | "bulk">("quick");
 	const [singleQuery, setSingleQuery] = useState("");
 	const [bulkQuery, setBulkQuery] = useState("");
 	const [searchTerms, setSearchTerms] = useState<string[]>([]);
@@ -18,13 +18,13 @@ export function SearchForm() {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const { suggestions, isLoading: isLoadingSuggestions } = useRealtimeSearch(
-		searchMode === "single" ? singleQuery : "",
+		searchMode === "quick" ? singleQuery : "",
 		showSuggestions,
 	);
 	const { results, isLoading: isSearching } =
 		useSerialNumberSearch(searchTerms);
 
-	// 単体検索
+	// クイック検索
 	const handleSingleSearch = () => {
 		if (!singleQuery.trim()) return;
 		setSearchTerms([singleQuery.trim()]);
@@ -125,13 +125,13 @@ export function SearchForm() {
 					</div>
 
 					{/* タブ */}
-					<div className="tabs tabs-boxed mb-4">
+					<div className="tabs tabs-border mb-4">
 						<button
 							type="button"
-							className={`tab ${searchMode === "single" ? "tab-active" : ""}`}
-							onClick={() => setSearchMode("single")}
+							className={`tab ${searchMode === "quick" ? "tab-active" : ""}`}
+							onClick={() => setSearchMode("quick")}
 						>
-							単体検索
+							クイック検索
 						</button>
 						<button
 							type="button"
@@ -142,8 +142,8 @@ export function SearchForm() {
 						</button>
 					</div>
 
-					{/* 単体検索フォーム */}
-					{searchMode === "single" && (
+					{/* クイック検索フォーム */}
+					{searchMode === "quick" && (
 						<div className="space-y-4">
 							<div className="form-control">
 								<label htmlFor="single-search-input" className="label">
@@ -196,7 +196,7 @@ export function SearchForm() {
 														<span
 															className={`badge badge-sm ${suggestion.is_insurance ? "badge-success" : "badge-warning"}`}
 														>
-															{suggestion.is_insurance ? "保険済み" : "未保険"}
+															{suggestion.is_insurance ? "保険有り" : "未保険"}
 														</span>
 													</button>
 												),
@@ -217,7 +217,7 @@ export function SearchForm() {
 								type="button"
 								onClick={handleSingleSearch}
 								disabled={!singleQuery.trim() || isSearching}
-								className="btn btn-primary w-full"
+								className="btn btn-accent btn-lg w-full"
 							>
 								{isSearching ? (
 									<>
@@ -258,7 +258,7 @@ export function SearchForm() {
 									type="button"
 									onClick={handleBulkSearch}
 									disabled={!bulkQuery.trim() || isSearching}
-									className="btn btn-primary flex-1"
+									className="btn btn-lg btn-accent flex-1"
 								>
 									{isSearching ? (
 										<>
@@ -277,7 +277,7 @@ export function SearchForm() {
 									type="button"
 									onClick={() => fileInputRef.current?.click()}
 									disabled={isSearching}
-									className="btn btn-outline"
+									className="btn btn-outline btn-lg"
 								>
 									<FileUp className="w-4 h-4" />
 									CSV読込
@@ -314,7 +314,7 @@ export function SearchForm() {
 									</span>
 									<div className="flex gap-2">
 										<span className="badge badge-success">
-											保険済み:{" "}
+											保険有り:{" "}
 											{
 												results.filter(
 													(r: SearchResult) => r.found && r.is_insurance,
@@ -339,7 +339,7 @@ export function SearchForm() {
 								<button
 									type="button"
 									onClick={handleCsvDownload}
-									className="btn btn-outline btn-sm"
+									className="btn btn-sm btn-outline"
 								>
 									<Download className="w-4 h-4" />
 									CSV出力
