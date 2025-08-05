@@ -156,7 +156,7 @@ export function SearchForm() {
 					</div>
 
 					{/* タブ */}
-					<div className="tabs tabs-boxed mb-4">
+					<div className="tabs tabs-border mb-4">
 						<button
 							type="button"
 							className={`tab ${searchMode === "single" ? "tab-active" : ""}`}

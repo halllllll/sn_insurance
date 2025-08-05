@@ -6,7 +6,7 @@ vars:
   BASE_URL: http://localhost:9991
   APP_URL: 
   CONTENT_TYPE: "Content-Type: application/json"
-  APP_NAME: tekitou
+  APP_NAME: sn-insurance
 
 tasks:
   dev:

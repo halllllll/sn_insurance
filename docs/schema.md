@@ -23,4 +23,13 @@ erDiagram
     datetime updated
   }
 
+  organization_settings{
+    text app_title
+    text organization_name
+    email contact_email
+    text app_description
+    bool maintenace_mode
+    text maintenance_message
+  }
+
 ```
