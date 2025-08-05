@@ -53,7 +53,9 @@ tasks:
   frontend:build:
     desc: build frontend code
     dir: ./frontend
-    cmd: bun run build
+    cmds:
+      - bun i
+      - bun run build
   
   backend:build:
     desc: build pocketbase code
