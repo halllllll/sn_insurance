@@ -1,0 +1,13 @@
+node_modules
+.git
+.github
+.gitignore
+.vscode
+Dockerfile
+app.Dockerfile
+*.log
+origin
+*.md
+air-main
+*.toml
+*.csv
