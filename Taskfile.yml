@@ -2,11 +2,15 @@
 
 version: '3'
 
+dotenv: [".env"]
+
 vars:
-  BASE_URL: http://localhost:9991
   APP_URL: 
   CONTENT_TYPE: "Content-Type: application/json"
   APP_NAME: sn-insurance
+  # BIND_HOST: '{{default "localhost" .BIND_HOST}}'
+  BIND_HOST: '0.0.0.0'
+  BASE_URL: http://{{.BIND_HOST}}:9991
 
 tasks:
   dev:
@@ -63,7 +67,7 @@ tasks:
 
   up:
     desc: execute pocketbase app
-    cmd: ./{{.APP_NAME}} serve --http=localhost:9991
+    cmd: ./{{.APP_NAME}} serve --http={{.BIND_HOST}}:9991
 
   dev:health:
     desc: server health check

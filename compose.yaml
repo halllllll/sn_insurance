@@ -1,0 +1,50 @@
+services:
+  app:
+    container_name: sn-insurance
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
+    volumes:
+      - pocketbase_data:/pb_data
+    depends_on:
+      cloudflared:
+        condition: service_healthy
+    networks:
+      - awesome_network_name_dayo
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cf-tunnel
+    hostname: cloudflare-tunnel
+    restart: unless-stopped
+    # sysctls:     # Enables ICMP traffic passthrough. Fix taken from GitHub thread https://github.com/cloudflare/cloudflared/issues/1334#issuecomment-2612884310
+    #   net.ipv4.ping_group_range: "65532 65532"
+    command: --protocol http2 tunnel --no-autoupdate run
+    dns:
+      - 192.168.1.1
+      - 1.1.1.1
+    environment: 
+      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - awesome_network_name_dayo
+networks:
+  awesome_network_name_dayo:
+    driver: "bridge"
+
+volumes:
+    pocketbase_data:
+
+
+# なんかうまくいかないのでenviromentに直接与えることにした
+# secrets:
+#   cf-token:
+#     external: true
+#     environment: "${CF_TUNNEL_TOKEN}"
