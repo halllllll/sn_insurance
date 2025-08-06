@@ -15,7 +15,7 @@ export const LoginForm: FC = () => {
 			{/* メインコンテンツ */}
 			<main className="min-h-[calc(90vh)] flex-1 flex items-center justify-center">
 				<div className="w-full max-w-md">
-					<div className="card bg-base-100 shadow-xl">
+					<div className="card bg-base-100 shadow-xl pb-4">
 						<div className="card-body">
 							<div className="text-center mb-8">
 								<div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -84,12 +84,6 @@ export const LoginForm: FC = () => {
 								</svg>
 								Googleでログイン
 							</button>
-
-							<div className="text-center mt-4">
-								<p className="text-xs text-base-content/50">
-									Google認証を使用してセキュアにログインします
-								</p>
-							</div>
 						</div>
 					</div>
 				</div>

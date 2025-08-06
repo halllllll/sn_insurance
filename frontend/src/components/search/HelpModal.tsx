@@ -48,7 +48,7 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 							<div className="bg-base-200 p-4 rounded-lg">
 								<p className="font-medium mb-2">改行区切り:</p>
 								<pre className="text-sm whitespace-pre-wrap">
-									${`ABC123\nDEF456\nGHI789`}
+									{`ABC123\nDEF456\nGHI789`}
 								</pre>
 							</div>
 							<div className="bg-base-200 p-4 rounded-lg">
@@ -106,7 +106,7 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
 						<div className="bg-warning/10 p-4 rounded-lg">
 							<ul className="list-disc list-inside space-y-1 text-sm">
 								<li>一度に検索できるシリアルナンバーは最大100件です</li>
-								<li>リアルタイム検索は2文字以上の入力で動作します</li>
+								<li>クイック検索は2文字以上の入力で動作します</li>
 								<li>CSVファイルの最初の列のみが読み込まれます</li>
 							</ul>
 						</div>
