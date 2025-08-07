@@ -8,8 +8,8 @@ vars:
   APP_URL: 
   CONTENT_TYPE: "Content-Type: application/json"
   APP_NAME: sn-insurance
-  # BIND_HOST: '{{default "localhost" .BIND_HOST}}'
-  BIND_HOST: '0.0.0.0'
+  BIND_HOST: '{{.BIND_HOST | default "localhost"}}'
+  # BIND_HOST: '0.0.0.0'
   BASE_URL: http://{{.BIND_HOST}}:9991
 
 tasks:
