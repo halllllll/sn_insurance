@@ -1,13 +1,53 @@
-node_modules
+# Git関連
 .git
 .github
 .gitignore
+
+# 開発環境
 .vscode
-Dockerfile
-app.Dockerfile
+.idea
+*.toml
+# .env*
+
+# ドキュメント
+*.md
+docs/
+
+# ログとデバッグ
 *.log
 origin
 *.md
 air-main
 *.toml
 *.csv
+origin
+
+# Docker関連
+Dockerfile
+app.Dockerfile
+docker-compose*.yml
+compose.yaml
+
+# # Node.js（フロントエンドはビルド済みのdistのみ必要）
+# node_modules
+# frontend/node_modules
+# frontend/src
+# frontend/public
+# !frontend/dist
+
+# Go build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+coverage.*
+
+# 一時ファイル
+tmp/
+temp/
+.tmp/
+
+# OS固有
+.DS_Store
+Thumbs.db

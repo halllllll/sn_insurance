@@ -4,13 +4,21 @@ services:
     build:
       context: .
       dockerfile: ./app.Dockerfile
+      target: runtime-alpine
     volumes:
-      - pocketbase_data:/pb_data
+      - pocketbase_data:/app/pb_data
     depends_on:
       cloudflared:
         condition: service_healthy
     networks:
       - awesome_network_name_dayo
+    ports:
+      - "8090:8090"
+    environment:
+      - APP_ENV=production
+    # profiles:
+    #   - production
+
 
   cloudflared:
     image: cloudflare/cloudflared:latest

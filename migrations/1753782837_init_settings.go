@@ -2,8 +2,8 @@ package migrations
 
 import (
 	"fmt"
-	"learning-pb-easy/config"
 	"log"
+	"sn-insurance/config"
 
 	"github.com/pocketbase/pocketbase/core"
 	m "github.com/pocketbase/pocketbase/migrations"

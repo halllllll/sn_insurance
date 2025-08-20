@@ -1,4 +1,4 @@
-module learning-pb-easy
+module sn-insurance
 
 go 1.24.2
 
