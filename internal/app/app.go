@@ -68,6 +68,7 @@ func (a *App) setupHooks() {
 	})
 
 	a.pb.OnRecordAuthWithOAuth2Request().BindFunc(func(e *core.RecordAuthWithOAuth2RequestEvent) error {
+		// TODO: auth request時の処理
 		return e.Next()
 	})
 }
