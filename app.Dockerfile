@@ -43,7 +43,7 @@ WORKDIR /app
 
 # copy build product
 COPY --from=builder /app/sn-insurance /app/
-COPY --from=builder /app/pb_data /app/pb_data
+
 # 環境変数必要だった（イケてないが今回のやつはsecretにいれたりするほどのものでもない）
 COPY --from=builder /app/.env /app/.env
 COPY --from=builder /app/config.yaml /app/config.yaml
